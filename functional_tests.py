@@ -1,9 +1,16 @@
 from selenium import webdriver
+import unittest
 
-browser = webdriver.Firefox()
-browser.get('http://localhost:8000')
+class NewVisitorTest(unittest.TestCase):
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        self.browser = webdriver.Firefox()
+        self.browser.get('http://localhost:8000')
 
-assert 'To-Do' in browser.title
+        self.assertIn('To-Do', self.browser.title)
 
+        
 
-browser.quit()
+        self.browser.quit()
+
+if __name__ == "__main__":
+    unittest.main()
