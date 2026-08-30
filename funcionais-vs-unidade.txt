@@ -1,0 +1,5 @@
+Testes Unitários:
+Teste a menor unidade possível do código, normalmente uma função ou método específico. São extremamente rápidos e, caso falhem, mostram com precisão o local do problema.
+
+Teste Funcionais:
+O foco é o comportamento do sistema sob a visão do usuário ou de um requisito específico do sistema, verificando se uma funcionalidade funciona como o esperado. São mais lentos pois envolvem mais partes do sistema (navegador, servidor, banco de dados)
