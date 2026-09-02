@@ -1,0 +1,15 @@
+# Dependências para as atividades das aulas em ./aulas
+# Python 3.14+ (ver aulas/antes.md)
+#
+# Instalação (com o virtualenv ativado):
+#   pip install -r requirements.txt
+#
+# ATENÇÃO: além destes pacotes, é necessário o Firefox instalado e o
+# geckodriver disponível no PATH ou na raiz do projeto (aulas/antes.md, item 8):
+#   https://github.com/mozilla/geckodriver/releases
+
+# Framework web usado na aplicação superlists (aulas 1-3)
+django>=5,<6
+
+# Testes funcionais no navegador (functional_tests.py)
+selenium<7
