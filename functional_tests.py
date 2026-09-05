@@ -33,7 +33,8 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element(By.ID, 'id_list_table')
         rows = table.find_elements(By.TAG_NAME, 'tr')
         self.assertTrue(
-            any(row.text == '1: Estudar testes funcionais' for row in rows)
+            any(row.text == '1: Estudar testes funcionais' for row in rows),
+            "New to-do item did not appear in table"
         ) # tenta encontrar a string em alguma linha da tabela
         
 
