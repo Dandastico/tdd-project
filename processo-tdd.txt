@@ -1,0 +1,24 @@
+Processo TDD com dois níveis de teste (double loop)
+
+O processo TDD combina dois ciclos, um dentro do outro.
+
+Laço externo - Testes Funcionais:
+Começa com a escrita de um Teste Funcional que descreve a nova funcionalidade
+do ponto de vista do usuário, e com a verificação de que ele falha. É um ciclo
+lento, que define O QUE deve ser construído e serve como critério de pronto.
+
+Laço interno - Testes de Unidade:
+Enquanto o Teste Funcional está falhando, entramos no ciclo rápido: escrever um
+Teste de Unidade, ver o teste falhar, escrever o mínimo de código da aplicação
+para fazê-lo passar e, com os testes passando, refatorar. Esse ciclo se repete
+quantas vezes for necessário e define COMO construir.
+
+Ligação entre os dois:
+O Teste Funcional falhando é o que justifica a entrada no laço interno. A cada
+volta completa do ciclo de unidade, rodamos o Teste Funcional novamente. Se ele
+ainda falha, mas com uma mensagem de erro diferente, houve progresso e voltamos
+ao laço interno. Quando o Teste Funcional passa, a funcionalidade está pronta e
+escrevemos o próximo Teste Funcional.
+
+Em todas as etapas, os testes existentes servem de rede de proteção: eles
+garantem que a refatoração e o novo código não quebraram o que já funcionava.
