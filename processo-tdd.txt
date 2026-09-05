@@ -1,7 +1,3 @@
-Processo TDD com dois níveis de teste (double loop)
-
-O processo TDD combina dois ciclos, um dentro do outro.
-
 Laço externo - Testes Funcionais:
 Começa com a escrita de um Teste Funcional que descreve a nova funcionalidade
 do ponto de vista do usuário, e com a verificação de que ele falha. É um ciclo
