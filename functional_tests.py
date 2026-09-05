@@ -11,6 +11,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element(By.ID, 'id_list_table')
+        rows = table.find_elements(By.TAG_NAME, 'tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         
         self.browser.get('http://localhost:8000')
@@ -29,11 +34,7 @@ class NewVisitorTest(unittest.TestCase):
         # ao apertar ennter, página atualiza, mostrando a lista
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
-
-        table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_elements(By.TAG_NAME, 'tr')
-        # tenta encontrar a string em alguma linha da tabela
-        self.assertIn('1: Estudar testes funcionais', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Estudar testes funcionais')
 
         # ainda existe caixa de texto convidando a adicionar outro item
         # digita "Estudar testes de unidade"
@@ -43,10 +44,8 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         # a página atualiza novamente, mostrando ambos os itens na lista
-        table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.assertIn('1: Estudar testes funcionais', [row.text for row in rows])
-        self.assertIn('2: Estudar testes de unidade', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Estudar testes funcionais')
+        self.check_for_row_in_list_table('2: Estudar testes de unidade')
 
         # verifica se o site gerou uma URL única para a lista
 
