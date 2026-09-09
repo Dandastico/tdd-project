@@ -1,0 +1,56 @@
+RESPOSTAS — AULA PRÁTICA 02
+Daniel Ferreira
+
+
+1) Qual a diferença entre renderizar HTML diretamente na view e utilizar templates?
+
+Renderizar na view é escrever o HTML como string dentro do código Python, como em
+HttpResponse('<html>...</html>'); com template, o HTML fica em um arquivo separado
+(home.html), montado por render(). O template separa apresentação de lógica, facilita a
+manutenção e permite conteúdo dinâmico com {{ item.text }} e {% for %}, usado no passo 17.
+
+
+2) Por que o uso de POST é mais adequado para envio de dados do usuário?
+
+GET serve para buscar informação e POST para enviar dados que alteram o estado do servidor;
+criar um item no banco é POST. Os dados vão no corpo da requisição, e não na URL, evitando
+exposição no histórico e o limite de tamanho do endereço. Por isso o passo 15 respondeu ao
+POST com redirect('/'), para que recarregar a página não duplique o item.
+
+
+3) Como os testes ajudaram a detectar regressões durante a evolução da aplicação?
+
+Regressão é quando uma mudança nova quebra algo que já funcionava. No passo 9, ao passar o
+dado do POST ao template, quem falhou foi o test_uses_home_template, o primeiro teste criado,
+com MultiValueDictKeyError: "'item_text'", pois um GET não tem esse campo. A suíte apontou o
+erro no instante em que surgiu e levou à correção com .get('item_text', '').
+
+
+4) Qual a função das migrations no Django?
+
+As migrations traduzem o modelo escrito em Python para a estrutura real das tabelas do banco.
+A classe Item em models.py gerou, via makemigrations, os arquivos 0001_initial.py e
+0002_item_text.py, e o migrate os aplicou, criando a tabela lists_item. Elas versionam o
+esquema junto com o código e constroem o banco dos testes; no passo 18, criaram o de produção.
+
+
+5) Texto: da aplicação estática para a aplicação web dinâmica
+
+A Aula Prática 02 mostra a aplicação saindo de uma página fixa e chegando a um
+sistema que recebe, processa, guarda e devolve informação do usuário. No início a
+view apenas devolvia uma string de HTML, sempre igual, sem qualquer participação de
+quem acessava a página. A interface foi o primeiro ponto a mudar: o HTML saiu do
+código Python e passou para o template home.html, que ganhou um formulário e uma
+tabela, e com as marcações {{ }} e {% for %} a mesma página passou a exibir
+conteúdos diferentes conforme os dados recebidos. O processamento da requisição foi
+o segundo ponto: a view deixou de ter uma única resposta e passou a examinar
+request.method, tratando GET e POST de maneiras distintas e respondendo ao POST com
+um redirect que evita o reenvio do formulário. A persistência foi o terceiro ponto:
+sem banco, tudo se perdia ao recarregar a página, e com o modelo Item, as migrations
+e o comando migrate os itens passaram a ser gravados no db.sqlite3 e continuaram
+disponíveis nos acessos seguintes. Os testes automatizados sustentaram todas essas
+etapas, porque cada funcionalidade começou por um teste que falhava e a implementação
+veio depois, apenas o suficiente para fazê-lo passar. A suíte completa rodava a cada
+mudança, e foi ela que revelou a regressão do passo 9 no momento exato em que surgiu.
+O resultado é uma aplicação dinâmica construída em passos pequenos e verificáveis, em
+que cada avanço foi confirmado por um teste antes de ser considerado pronto.
